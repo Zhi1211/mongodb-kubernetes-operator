@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# deploy operator
+make deploy
+
 # shellcheck disable=SC1091
 . venv/bin/activate
 if [ -z "${clusterwide:-}" ]; then
