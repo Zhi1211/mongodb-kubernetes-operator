@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# deploy operator
-make deploy
-
 # shellcheck disable=SC1091
 . venv/bin/activate
 if [ -z "${clusterwide:-}" ]; then
@@ -10,4 +7,3 @@ if [ -z "${clusterwide:-}" ]; then
 else
     python3 ./scripts/dev/e2e.py --test "${test:?}" --tag "${version_id:?}" --config_file ./scripts/ci/config.json --cluster-wide
 fi
-

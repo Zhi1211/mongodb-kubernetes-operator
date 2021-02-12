@@ -73,6 +73,11 @@ deploy: manifests kustomize
 	cd config/manager && $(KUSTOMIZE) edit set image controller=${IMG}
 	$(KUSTOMIZE) build config/default | kubectl apply -f -
 
+# Deploy controller for evergreen test
+evergreen-deploy:
+	cd config/manager && $(KUSTOMIZE) edit set image controller=${IMG}
+	$(KUSTOMIZE) build config/default | kubectl apply -f -
+
 # UnDeploy controller from the configured Kubernetes cluster in ~/.kube/config
 undeploy:
 	$(KUSTOMIZE) build config/default | kubectl delete -f -
@@ -92,11 +97,6 @@ vet:
 # Generate code
 generate: controller-gen
 	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="./..."
-
-# Generate Dockerfile
-.PHONY: dockerfile
-dockerfile:
-	python scripts/dev/dockerfile_generator.py ${DOCKERFILE} > Dockerfile
 
 # Build the docker image
 docker-build: dockerfile
@@ -142,3 +142,8 @@ bundle: manifests kustomize
 .PHONY: bundle-build
 bundle-build:
 	docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
+
+# Generate Dockerfile
+.PHONY: dockerfile
+dockerfile:
+	python scripts/dev/dockerfile_generator.py ${DOCKERFILE} > Dockerfile
