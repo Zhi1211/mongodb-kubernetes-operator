@@ -31,7 +31,7 @@ BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 BUNDLE_IMG ?= controller-bundle:$(VERSION)
 
 # Image URL to use all building/pushing image targets
-IMG ?= localhost:5000/mongodb-kubernetes-operator
+IMG ?= quay.io/mongodb/mongodb-kubernetes-operator:0.5.0 # replace with localhost:5000/mongodb-kubernetes-operator locally
 DOCKERFILE ?= operator
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= "crd:trivialVersions=true,preserveUnknownFields=false"
@@ -94,6 +94,7 @@ generate: controller-gen
 	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="./..."
 
 # Generate Dockerfile
+.PHONY: dockerfile
 dockerfile:
 	python scripts/dev/dockerfile_generator.py ${DOCKERFILE} > Dockerfile
 
