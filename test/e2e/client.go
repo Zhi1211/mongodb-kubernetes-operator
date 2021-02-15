@@ -72,7 +72,6 @@ func newE2ETestClient(config *rest.Config, scheme *runtime.Scheme) (*E2ETestClie
 
 // Create wraps client.Create to provide post-test cleanup functionality.
 func (c *E2ETestClient) Create(ctx context.Context, obj client.Object, cleanupOptions *CleanupOptions) error {
-	// objCopy := obj.DeepCopyObject()
 	err := c.Client.Create(ctx, obj)
 	if err != nil {
 		return err
