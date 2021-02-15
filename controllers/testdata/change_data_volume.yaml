@@ -21,12 +21,11 @@ spec:
         - name: userAdminAnyDatabase
           db: admin
   statefulSet:
-    spec:
-      volumeClaimTemplates:
-        - metadata:
-            name: data-volume
-          spec:
-            accessModes: [ "ReadWriteOnce", "ReadWriteMany" ]
-            resources:
-              requests:
-                storage: 50Gi
+    volumeClaimTemplates:
+      - metadata:
+          name: data-volume
+        spec:
+          accessModes: [ "ReadWriteOnce", "ReadWriteMany" ]
+          resources:
+            requests:
+              storage: 50Gi
